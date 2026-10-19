@@ -1,0 +1,11 @@
+Execution record
+Started: 2026-10-18T20:42:01.053470-05:00
+Finished: 2026-10-18T20:42:02.732168-05:00
+Python executable: /opt/anaconda3/bin/python3
+Command: python coding_essay.py
+Exit status: 0
+Versions: {"matplotlib": "3.10.0", "numpy": "2.1.3", "pandas": "2.2.3", "python": "3.13.5"}
+SHA-256 coding_essay.py: 728098efa796613515bee470d0b73305f303672fa7efdb424c8cd2bb987cc1ea
+SHA-256 support/data/online_shoppers_intention.csv: b3055ee355f59134d851d32641183cb4a8b45def7124d2f50442a042f358e0d9
+SHA-256 support/results/console_output.txt: 25d227fffca895e1869263d7acc555998fb7ded9bf01cf57b381111996e2ddc7
+SHA-256 support/results/conversion_comparison.png: 5476a6f9cf61aaac280d5aa7131fb2a60141cb04f84db63f0321215e865e5b4a
