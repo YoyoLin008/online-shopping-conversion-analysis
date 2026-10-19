@@ -39,6 +39,8 @@ npm run export:pdf
 
 The exporter parses Markdown into HTML and prints it to PDF using a fresh headless browser. It uses an installed Playwright Chromium binary if available, otherwise installed Google Chrome. If neither is available, run `npx playwright install chromium` first. Times New Roman and Courier New should be installed to match the checked layout. The code is grouped into three fenced blocks, followed by captured Python output, the original Matplotlib figure, and interpretation. An explicit page break keeps the document at two pages; inspect the exported PDF after substantive edits.
 
+Python code is syntax-highlighted with PrismJS using restrained notebook-style colors on light-gray cells. Keywords are green, strings red, and operators purple; prose, captured output and the analytical figure remain monochrome. The exporter verifies that highlighting preserves the exact code and output text.
+
 The Python script and data are unchanged. The PDF uses the current Markdown wording, including removal of the standalone author line. The earlier Word document and its builder are retained as the previous editable layout. `support/build_pdf.py` is also retained for the earlier direct-Python PDF layout; use the Markdown exporter for the current version.
 
 To rebuild the editable Word document from the same source code and saved Python outputs:

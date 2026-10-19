@@ -15,13 +15,25 @@ function dependency(name) {
 }
 const { marked } = dependency('marked');
 const { chromium } = dependency('playwright');
+const Prism = dependency('prismjs');
+dependency('prismjs/components/prism-python');
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const basename = 'Yunya_Lin_UChicago_Coding_Essay';
 const markdown = await readFile(path.join(root, `${basename}.md`), 'utf8');
-const html = marked.parse(markdown, { gfm: true });
+const codeBlocks = [];
+const renderer = new marked.Renderer();
+renderer.code = ({ text, lang }) => {
+  const language = lang === 'python' ? 'python' : 'text';
+  codeBlocks.push(text);
+  const content = language === 'python'
+    ? Prism.highlight(text, Prism.languages.python, 'python')
+    : text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+  return `<pre><code class="language-${language}">${content}</code></pre>\n`;
+};
+const html = marked.parse(markdown, { gfm: true, renderer });
 const css = `
 @page { size: Letter; margin: 0.5in 0.75in; }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 html { color: #000; background: #fff; }
 body { margin: 0; font: 10.5pt/1.2 "Times New Roman", Times, serif; }
 h1 { font-size: 15pt; line-height: 1.15; text-align: center; margin: 0 0 10pt; }
@@ -33,6 +45,14 @@ pre { margin: 0; padding: 5pt 7pt; border: 0.5pt solid #ccc;
 pre, code { font-family: "Courier New", Courier, monospace; }
 pre code { display: block; font-size: 9.25pt; line-height: 10.6pt;
   white-space: pre; color: #000; }
+/* Restrained notebook colors; outputs and the analytical figure stay black. */
+.token.comment { color: #408080; font-style: italic; }
+.token.keyword, .token.boolean { color: #008000; font-weight: bold; }
+.token.string, .token.triple-quoted-string { color: #ba2121; }
+.token.operator { color: #aa22ff; }
+.token.function { color: #0000ff; }
+.token.number, .token.builtin { color: #008000; }
+.token.punctuation { color: #333; }
 pre:has(code.language-text) { background: #fff; border-color: #aaa; }
 pre code.language-text { font-size: 9pt; line-height: 10.5pt; }
 .page-break { break-after: page; }
@@ -57,6 +77,10 @@ try {
   const page = await browser.newPage();
   await page.goto(pathToFileURL(file).href, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
+  const renderedCode = await page.locator('pre code').allTextContents();
+  if (JSON.stringify(renderedCode) !== JSON.stringify(codeBlocks)) {
+    throw new Error('Syntax highlighting changed the code or output text');
+  }
   const failedImages = await page.locator('img').evaluateAll(images =>
     images.filter(i => !i.complete || !i.naturalWidth).map(i => i.src));
   if (failedImages.length) throw new Error(`Unloaded image: ${failedImages}`);

@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "marked": "17.0.5",
-    "playwright": "1.62.1"
+    "playwright": "1.62.1",
+    "prismjs": "1.30.0"
   }
 }
