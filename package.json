@@ -1,0 +1,14 @@
+{
+  "name": "online-shopping-conversion-analysis",
+  "private": true,
+  "scripts": {
+    "export:pdf": "node support/export_markdown_pdf.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "marked": "17.0.5",
+    "playwright": "1.62.1"
+  }
+}

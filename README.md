@@ -15,7 +15,7 @@ The observed difference is 10.98 percentage points; standardizing the month mix 
 
 ![Purchase rates and observed-rate Wilson intervals](support/results/conversion_comparison.png)
 
-[Editable Word document](Yunya_Lin_UChicago_Coding_Essay.docx) · [Two-page PDF](Yunya_Lin_UChicago_Coding_Essay.pdf) · [Exact console output](support/results/console_output.txt) · [Execution record](support/results/execution_record.txt)
+[Markdown source](Yunya_Lin_UChicago_Coding_Essay.md) · [Two-page PDF](Yunya_Lin_UChicago_Coding_Essay.pdf) · [Earlier Word version](Yunya_Lin_UChicago_Coding_Essay.docx) · [Exact console output](support/results/console_output.txt) · [Execution record](support/results/execution_record.txt)
 
 ## Reproduce
 
@@ -30,14 +30,16 @@ python coding_essay.py
 
 The CSV is included, so the analysis needs no network access. The script prints the results and writes the figure to `support/results/conversion_comparison.png`. It uses Times New Roman when available and falls back to DejaVu Serif for the figure. There is no random sampling in the analysis.
 
-To execute the analysis and rebuild the PDF on macOS:
+The current PDF is exported from the editable Markdown source. To export it using Node.js 24 or later:
 
 ```sh
-python -m pip install -r support/requirements-pdf.txt
-python support/build_pdf.py
+npm install
+npm run export:pdf
 ```
 
-The PDF builder requires locally installed Times New Roman and Courier New font files. It runs the analysis as a subprocess, captures standard output, and inserts the resulting Matplotlib image. It records the execution time, exit status, versions, and source/output checksums. It accepts `--python /path/to/python` to use a separate analysis environment. Font files are not distributed in this repository.
+The exporter parses Markdown into HTML and prints it to PDF using a fresh headless browser. It uses an installed Playwright Chromium binary if available, otherwise installed Google Chrome. If neither is available, run `npx playwright install chromium` first. Times New Roman and Courier New should be installed to match the checked layout. The code is grouped into three fenced blocks, followed by captured Python output, the original Matplotlib figure, and interpretation. An explicit page break keeps the document at two pages; inspect the exported PDF after substantive edits.
+
+The Python script and data are unchanged. The PDF uses the current Markdown wording, including removal of the standalone author line. The earlier Word document and its builder are retained as the previous editable layout. `support/build_pdf.py` is also retained for the earlier direct-Python PDF layout; use the Markdown exporter for the current version.
 
 To rebuild the editable Word document from the same source code and saved Python outputs:
 
