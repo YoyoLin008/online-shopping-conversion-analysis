@@ -2,3 +2,4 @@
 *.png binary
 support/data/*.csv -text
 support/results/console_output.txt -text
+*.docx binary

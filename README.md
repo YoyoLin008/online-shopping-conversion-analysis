@@ -15,7 +15,7 @@ The observed difference is 10.98 percentage points; standardizing the month mix 
 
 ![Purchase rates and observed-rate Wilson intervals](support/results/conversion_comparison.png)
 
-[Two-page PDF](Yunya_Lin_UChicago_Coding_Essay.pdf) · [Exact console output](support/results/console_output.txt) · [Execution record](support/results/execution_record.txt)
+[Editable Word document](Yunya_Lin_UChicago_Coding_Essay.docx) · [Two-page PDF](Yunya_Lin_UChicago_Coding_Essay.pdf) · [Exact console output](support/results/console_output.txt) · [Execution record](support/results/execution_record.txt)
 
 ## Reproduce
 
@@ -38,6 +38,15 @@ python support/build_pdf.py
 ```
 
 The PDF builder requires locally installed Times New Roman and Courier New font files. It runs the analysis as a subprocess, captures standard output, and inserts the resulting Matplotlib image. It records the execution time, exit status, versions, and source/output checksums. It accepts `--python /path/to/python` to use a separate analysis environment. Font files are not distributed in this repository.
+
+To rebuild the editable Word document from the same source code and saved Python outputs:
+
+```sh
+python -m pip install -r support/requirements-docx.txt
+python support/build_docx.py
+```
+
+The Word document uses Times New Roman for prose and Courier New for editable code and output. The original Matplotlib figure is embedded without modification. Its two-page layout has been rendered and visually checked.
 
 ## Data and scope
 
